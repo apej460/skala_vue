@@ -1,12 +1,13 @@
 <script setup>
 import { computed, watch, onMounted } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
-import UnitToggler from '@/component/UnitToggler.vue'
-import DarkModeToggle from '@/component/DarkModeToggle.vue'
-import WeatherAnimation from './component/WeatherAnimation.vue'
+import UnitToggler from '@/components/UnitToggler.vue'
+import DarkModeToggle from '@/components/DarkModeToggle.vue'
+import WeatherAnimation from './components/WeatherAnimation.vue'
 import { useConfigStore } from '@/stores/configStore'
 import { useCitiesStore } from '@/stores/citiesStore'
 import { themeClass, isNightNow } from '@/utils/weatherHelpers'
+import { PartlyCloudy } from '@element-plus/icons-vue'
 
 const configStore = useConfigStore()
 const citiesStore = useCitiesStore()
@@ -51,7 +52,7 @@ onMounted(() => {
 
 watch(
   () => configStore.darkMode,
-  (value) => document.body.classList.toggle('dark-mode', value)
+  (value) => document.body.classList.toggle('dark-mode', value),
 )
 
 watch(currentTheme, (value) => applyBodyTheme(value))
@@ -63,7 +64,7 @@ watch(currentTheme, (value) => applyBodyTheme(value))
   <nav class="navbar">
     <div class="navbar-inner">
       <RouterLink to="/" class="brand">
-        <span>🌤️</span>
+        <el-icon><PartlyCloudy /></el-icon>
         <span>Weather Dashboard</span>
       </RouterLink>
 

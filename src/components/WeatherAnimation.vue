@@ -143,7 +143,13 @@ const stars = computed(() => {
   position: absolute;
   inset: 30px;
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, #fff9e6 0%, #ffe27a 45%, #ffc93c 75%, rgba(255, 201, 60, 0) 100%);
+  background: radial-gradient(
+    circle at 35% 30%,
+    #fff9e6 0%,
+    #ffe27a 45%,
+    #ffc93c 75%,
+    rgba(255, 201, 60, 0) 100%
+  );
   box-shadow: 0 0 60px 18px rgba(255, 210, 100, 0.55);
   animation: sun-pulse 4s ease-in-out infinite;
 }
@@ -152,10 +158,7 @@ const stars = computed(() => {
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  background: repeating-conic-gradient(
-    rgba(255, 244, 200, 0.55) 0deg 4deg,
-    transparent 4deg 18deg
-  );
+  background: repeating-conic-gradient(rgba(255, 244, 200, 0.55) 0deg 4deg, transparent 4deg 18deg);
   animation: sun-rotate 60s linear infinite;
   filter: blur(0.5px);
 }
@@ -187,7 +190,8 @@ const stars = computed(() => {
   height: 70px;
   border-radius: 50%;
   background: radial-gradient(circle at 32% 30%, #fdfdf6 0%, #eef0e0 55%, #d9dbc9 100%);
-  box-shadow: 0 0 34px 6px rgba(230, 233, 210, 0.45),
+  box-shadow:
+    0 0 34px 6px rgba(230, 233, 210, 0.45),
     inset -14px -6px 0 0 rgba(0, 0, 0, 0.12);
 }
 

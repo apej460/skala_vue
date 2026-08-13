@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 import { useConfigStore } from '@/stores/configStore'
 import { iconUrl, buildSparklinePoints } from '@/utils/weatherHelpers'
+import { Odometer } from '@element-plus/icons-vue'
 
 const props = defineProps({
   daily: { type: Array, default: () => [] },
@@ -23,7 +24,7 @@ const sparkDots = computed(() => {
   const raw = buildSparklinePoints(
     props.daily.map((d) => d.high),
     CHART_W - CHART_SIDE_PAD * 2,
-    CHART_LINE_H
+    CHART_LINE_H,
   )
   return raw
     .split(' ')
@@ -45,14 +46,26 @@ const sparkPoints = computed(() => sparkDots.value.map((p) => `${p.x},${p.y}`).j
 
 <template>
   <div class="daily">
-    <p v-if="daily.length > 1" class="chart-caption">🌡️ 일자별 최고기온 추이 ({{ configStore.unitLabel }})</p>
+    <p v-if="daily.length > 1" class="chart-caption">
+      <el-icon><Odometer /></el-icon> 일자별 최고기온 추이 ({{ configStore.unitLabel }})
+    </p>
     <div v-if="daily.length > 1" class="chart-wrap">
       <svg class="sparkline" :viewBox="`0 0 ${CHART_W} ${CHART_H}`">
-        <polyline :points="sparkPoints" fill="none" stroke="rgba(255,255,255,0.8)" stroke-width="2" />
+        <polyline
+          :points="sparkPoints"
+          fill="none"
+          stroke="rgba(255,255,255,0.8)"
+          stroke-width="2"
+        />
         <g v-for="p in sparkDots" :key="p.day">
           <circle :cx="p.x" :cy="p.y" r="3" fill="#fff" />
           <text :x="p.x" :y="p.y - 8" text-anchor="middle" class="spark-value">{{ p.temp }}°</text>
-          <text :x="p.x" :y="CHART_TOP_PAD + CHART_LINE_H + 13" text-anchor="middle" class="spark-day">
+          <text
+            :x="p.x"
+            :y="CHART_TOP_PAD + CHART_LINE_H + 13"
+            text-anchor="middle"
+            class="spark-day"
+          >
             {{ p.day }}
           </text>
         </g>

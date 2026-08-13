@@ -4,8 +4,21 @@ import { useRouter } from 'vue-router'
 import { useConfigStore } from '@/stores/configStore'
 import { useCitiesStore } from '@/stores/citiesStore'
 import { iconUrl, formatLocalTime, aqiInfo } from '@/utils/weatherHelpers'
-import HourlyForecast from '@/component/HourlyForecast.vue'
-import DailyForecast from '@/component/DailyForecast.vue'
+import HourlyForecast from '@/components/HourlyForecast.vue'
+import DailyForecast from '@/components/DailyForecast.vue'
+import {
+  HotWater,
+  IceDrink,
+  StarFilled,
+  Star,
+  Odometer,
+  Compass,
+  Sunrise,
+  Sunset,
+  Cloudy,
+  Timer,
+  Calendar,
+} from '@element-plus/icons-vue'
 
 const props = defineProps({
   cityId: { type: String, required: true },
@@ -40,13 +53,18 @@ onMounted(() => {
         <div>
           <h1>{{ city.name }}</h1>
           <p class="text-sub">
-            {{ weather.description }} · 습도 {{ weather.humidity }}% · 풍속 {{ weather.windSpeed }}m/s
+            {{ weather.description }} · 습도 {{ weather.humidity }}% · 풍속
+            {{ weather.windSpeed }}m/s
           </p>
         </div>
         <div class="temp-block">
           <p class="temp">{{ configStore.convertTemp(weather.temp) }}{{ configStore.unitLabel }}</p>
-          <p v-if="weather.temp >= 25" class="pill warm">🔥 더움</p>
-          <p v-else class="pill cool">❄️ 선선함</p>
+          <p v-if="weather.temp >= 25" class="pill warm">
+            <el-icon><HotWater /></el-icon> 더움
+          </p>
+          <p v-else class="pill cool">
+            <el-icon><IceDrink /></el-icon> 선선함
+          </p>
         </div>
       </header>
 
@@ -56,40 +74,55 @@ onMounted(() => {
           :class="{ active: configStore.isFavorite(city.id) }"
           @click="configStore.toggleFavorite(city.id)"
         >
-          {{ configStore.isFavorite(city.id) ? '★ 즐겨찾기 됨' : '☆ 즐겨찾기 추가' }}
+          <el-icon><component :is="configStore.isFavorite(city.id) ? StarFilled : Star" /></el-icon>
+          {{ configStore.isFavorite(city.id) ? '즐겨찾기 됨' : '즐겨찾기 추가' }}
         </button>
       </div>
 
       <div class="stat-grid">
         <div class="stat-card">
-          <p class="stat-label">🌡️ 체감</p>
+          <p class="stat-label">
+            <el-icon><Odometer /></el-icon> 체감
+          </p>
           <p class="stat-value">{{ configStore.convertTemp(weather.feelsLike) }}°</p>
         </div>
         <div class="stat-card">
-          <p class="stat-label">🧭 기압</p>
+          <p class="stat-label">
+            <el-icon><Compass /></el-icon> 기압
+          </p>
           <p class="stat-value">{{ weather.pressure }} hPa</p>
         </div>
         <div class="stat-card">
-          <p class="stat-label">🌅 일출</p>
+          <p class="stat-label">
+            <el-icon><Sunrise /></el-icon> 일출
+          </p>
           <p class="stat-value">{{ formatLocalTime(weather.sunrise, weather.timezone) }}</p>
         </div>
         <div class="stat-card">
-          <p class="stat-label">🌇 일몰</p>
+          <p class="stat-label">
+            <el-icon><Sunset /></el-icon> 일몰
+          </p>
           <p class="stat-value">{{ formatLocalTime(weather.sunset, weather.timezone) }}</p>
         </div>
         <div v-if="badge" class="stat-card aqi" :style="{ '--aqi-color': badge.color }">
-          <p class="stat-label">🌫️ 대기질</p>
+          <p class="stat-label">
+            <el-icon><Cloudy /></el-icon> 대기질
+          </p>
           <p class="stat-value">{{ badge.label }}</p>
         </div>
       </div>
 
       <div class="section">
-        <p class="section-title">⏱️ 시간별 예보</p>
+        <p class="section-title">
+          <el-icon><Timer /></el-icon> 시간별 예보
+        </p>
         <HourlyForecast :hourly="weather.hourly" />
       </div>
 
       <div class="section">
-        <p class="section-title">📅 5일 예보</p>
+        <p class="section-title">
+          <el-icon><Calendar /></el-icon> 5일 예보
+        </p>
         <DailyForecast :daily="weather.daily" />
       </div>
     </template>
@@ -147,7 +180,9 @@ onMounted(() => {
 }
 
 .pill {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   margin-top: 4px;
   padding: 3px 10px;
   border-radius: 999px;
@@ -187,6 +222,9 @@ onMounted(() => {
   margin: 0 0 4px;
   font-size: 12px;
   color: var(--text-sub);
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .stat-value {

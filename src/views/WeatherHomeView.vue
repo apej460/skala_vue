@@ -3,13 +3,13 @@ import { ref, computed, watch, watchEffect, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useConfigStore } from '@/stores/configStore'
 import { useCitiesStore } from '@/stores/citiesStore'
-import BaseDashboardCard from '@/component/exercise/BaseDashboardCard.vue'
-import SearchBar from '@/component/exercise/SearchBar.vue'
-import WeatherCard from '@/component/exercise/WeatherCard.vue'
-import HeroWeather from '@/component/HeroWeather.vue'
-import AddCitySearch from '@/component/AddCitySearch.vue'
-import HourlyForecast from '@/component/HourlyForecast.vue'
-import DailyForecast from '@/component/DailyForecast.vue'
+import BaseDashboardCard from '@/components/exercise/BaseDashboardCard.vue'
+import SearchBar from '@/components/exercise/SearchBar.vue'
+import WeatherCard from '@/components/exercise/WeatherCard.vue'
+import HeroWeather from '@/components/HeroWeather.vue'
+import AddCitySearch from '@/components/AddCitySearch.vue'
+import HourlyForecast from '@/components/HourlyForecast.vue'
+import DailyForecast from '@/components/DailyForecast.vue'
 
 const router = useRouter()
 const configStore = useConfigStore()
@@ -33,13 +33,14 @@ const filteredCities = computed(() => {
 // 검색 힌트 문구를 하나의 요소로 유지해 검색할 때마다 DOM이 교체되며 화면이 흔들리는 것을 방지
 const hintText = computed(() => {
   if (!searchQuery.value.trim()) return `전체 ${citiesStore.cities.length}개 도시를 추적 중입니다.`
-  if (filteredCities.value.length > 0) return `"${searchQuery.value}" 검색 결과 ${filteredCities.value.length}건`
+  if (filteredCities.value.length > 0)
+    return `"${searchQuery.value}" 검색 결과 ${filteredCities.value.length}건`
   return '검색 결과와 일치하는 도시가 없습니다 🙁'
 })
 const isHintEmpty = computed(() => searchQuery.value.trim() && filteredCities.value.length === 0)
 
 const favoriteCities = computed(() =>
-  citiesStore.cities.filter((c) => configStore.isFavorite(c.id))
+  citiesStore.cities.filter((c) => configStore.isFavorite(c.id)),
 )
 
 // 3) watch: selectedCityInfo가 바뀔 때마다 상태바 갱신 + 콘솔 로그
@@ -124,7 +125,8 @@ function handleRemoveCity(city) {
       >
         <span>{{ city.name }}</span>
         <span v-if="citiesStore.weatherById[city.id]">
-          {{ configStore.convertTemp(citiesStore.weatherById[city.id].temp) }}{{ configStore.unitLabel }}
+          {{ configStore.convertTemp(citiesStore.weatherById[city.id].temp)
+          }}{{ configStore.unitLabel }}
         </span>
       </RouterLink>
     </div>
@@ -155,7 +157,9 @@ function handleRemoveCity(city) {
 
 .card-fade-enter-active,
 .card-fade-leave-active {
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
 }
 
 .card-fade-enter-from,

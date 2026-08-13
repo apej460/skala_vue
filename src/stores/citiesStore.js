@@ -33,8 +33,12 @@ export const useCitiesStore = defineStore('cities', () => {
   const mapLoading = ref(false)
   const mapUpdatedAt = ref(0)
 
-  const primaryCity = computed(() => cities.value.find((c) => c.id === primaryId.value) ?? cities.value[0])
-  const primaryWeather = computed(() => (primaryCity.value ? weatherById.value[primaryCity.value.id] : null))
+  const primaryCity = computed(
+    () => cities.value.find((c) => c.id === primaryId.value) ?? cities.value[0],
+  )
+  const primaryWeather = computed(() =>
+    primaryCity.value ? weatherById.value[primaryCity.value.id] : null,
+  )
   const isAnyLoading = computed(() => Object.keys(loadingIds.value).length > 0)
 
   function persist() {
@@ -114,7 +118,7 @@ export const useCitiesStore = defineStore('cities', () => {
             reject(err)
           }
         },
-        () => reject(new Error('위치 접근 권한이 거부되었습니다.'))
+        () => reject(new Error('위치 접근 권한이 거부되었습니다.')),
       )
     })
   }
@@ -143,7 +147,16 @@ export const useCitiesStore = defineStore('cities', () => {
   async function trackKoreaCity(koreaCity) {
     const existing = cities.value.find((c) => c.id === koreaCity.id)
     if (!existing) {
-      cities.value = [...cities.value, { id: koreaCity.id, name: koreaCity.name, country: 'KR', lat: koreaCity.lat, lon: koreaCity.lon }]
+      cities.value = [
+        ...cities.value,
+        {
+          id: koreaCity.id,
+          name: koreaCity.name,
+          country: 'KR',
+          lat: koreaCity.lat,
+          lon: koreaCity.lon,
+        },
+      ]
       persist()
     }
     const city = cities.value.find((c) => c.id === koreaCity.id)

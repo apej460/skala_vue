@@ -9,7 +9,7 @@ const weatherList = ref([
   { id: 'city_04', name: '제주도', temp: 13, status: '비' },
   { id: 'city_05', name: '부산 기장', temp: 15, status: '구름' },
   { id: 'city_06', name: '강릉', temp: 29, status: '맑음' },
-  { id: 'city_07', name: '대전', temp: 22, status: '흐림' }
+  { id: 'city_07', name: '대전', temp: 22, status: '흐림' },
 ])
 
 const searchQuery = ref('')
@@ -42,7 +42,7 @@ const hotCityCount = computed(() => {
 watch(selectedCityInfo, (newVal, oldVal) => {
   if (newVal) {
     console.log(
-      `[watch] 상태바 변경: "${oldVal?.name || '없음'}" -> "${newVal.name}"(으)로 선택되었습니다.`
+      `[watch] 상태바 변경: "${oldVal?.name || '없음'}" -> "${newVal.name}"(으)로 선택되었습니다.`,
     )
   } else {
     console.log('[watch] 선택된 도시 없음')
@@ -119,10 +119,7 @@ const showDetail = (cityName, status) => {
             <p class="city-name">
               {{ item.name }} <span class="status">({{ item.status }})</span>
             </p>
-            <button
-              class="btn-detail"
-              @click.stop="showDetail(item.name, item.status)"
-            >
+            <button class="btn-detail" @click.stop="showDetail(item.name, item.status)">
               상세보기
             </button>
           </div>
@@ -151,7 +148,6 @@ const showDetail = (cityName, status) => {
   </div>
 </template>
 <style scoped>
-
 /* 전체 페이지 */
 .mockup-container {
   max-width: 1100px;
@@ -180,7 +176,6 @@ const showDetail = (cityName, status) => {
   font-weight: 700;
 }
 
-
 /* 공통 카드 */
 .card {
   background: #0f172a;
@@ -189,7 +184,6 @@ const showDetail = (cityName, status) => {
 
   box-sizing: border-box;
 }
-
 
 /* =========================
    검색 영역
@@ -207,7 +201,6 @@ const showDetail = (cityName, status) => {
   font-size: 20px;
   text-align: center;
 }
-
 
 /* 검색창 */
 .search-input-wrapper {
@@ -242,7 +235,6 @@ const showDetail = (cityName, status) => {
   box-shadow: 0 0 0 3px rgba(100, 116, 139, 0.15);
 }
 
-
 /* 검색 결과 + 필터 */
 .filter-wrapper {
   display: flex;
@@ -265,7 +257,6 @@ const showDetail = (cityName, status) => {
   color: #f8fafc;
   font-weight: 700;
 }
-
 
 /* 더운 도시 필터 버튼 */
 .btn-filter {
@@ -295,7 +286,6 @@ const showDetail = (cityName, status) => {
   color: #fed7aa;
 }
 
-
 /* =========================
    날씨 영역
 ========================= */
@@ -313,7 +303,6 @@ const showDetail = (cityName, status) => {
   text-align: center;
 }
 
-
 /* 날씨 카드 그리드 */
 .weather-grid {
   display: grid;
@@ -327,7 +316,6 @@ const showDetail = (cityName, status) => {
 
   list-style: none;
 }
-
 
 /* 개별 날씨 카드 */
 .weather-card {
@@ -353,7 +341,6 @@ const showDetail = (cityName, status) => {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
 }
 
-
 /* 카드 상단 */
 .card-header {
   display: flex;
@@ -364,7 +351,6 @@ const showDetail = (cityName, status) => {
 
   margin-bottom: 18px;
 }
-
 
 /* 도시 이름 */
 .city-name {
@@ -382,7 +368,6 @@ const showDetail = (cityName, status) => {
   font-size: 14px;
   font-weight: 400;
 }
-
 
 /* 상세보기 버튼 */
 .btn-detail {
@@ -408,7 +393,6 @@ const showDetail = (cityName, status) => {
   background: #1d4ed8;
 }
 
-
 /* 현재 기온 */
 .temp {
   margin: 10px 0 15px;
@@ -421,7 +405,6 @@ const showDetail = (cityName, status) => {
   text-align: center;
 }
 
-
 /* 더움 / 선선함 영역 */
 .badge-wrapper {
   display: flex;
@@ -429,7 +412,6 @@ const showDetail = (cityName, status) => {
 
   margin-top: 10px;
 }
-
 
 /* 공통 배지 */
 .badge {
@@ -443,7 +425,6 @@ const showDetail = (cityName, status) => {
   font-weight: 700;
 }
 
-
 /* 25도 이상 */
 .badge.hot {
   background: rgba(249, 115, 22, 0.12);
@@ -452,7 +433,6 @@ const showDetail = (cityName, status) => {
   border: 1px solid rgba(249, 115, 22, 0.3);
 }
 
-
 /* 25도 미만 */
 .badge.cool {
   background: rgba(56, 189, 248, 0.12);
@@ -460,7 +440,6 @@ const showDetail = (cityName, status) => {
 
   border: 1px solid rgba(56, 189, 248, 0.3);
 }
-
 
 /* =========================
    검색 결과 없음
@@ -487,7 +466,6 @@ const showDetail = (cityName, status) => {
   font-size: 15px;
 }
 
-
 /* =========================
    상태바
 ========================= */
@@ -506,12 +484,10 @@ const showDetail = (cityName, status) => {
   font-size: 15px;
 }
 
-
 /* 선택된 도시가 있을 때 */
 .status-bar p:not(:only-child) {
   color: #f8fafc;
 }
-
 
 /* =========================
    반응형
@@ -522,7 +498,6 @@ const showDetail = (cityName, status) => {
     grid-template-columns: repeat(2, 1fr);
   }
 }
-
 
 @media (max-width: 650px) {
   .mockup-container {
@@ -547,5 +522,4 @@ const showDetail = (cityName, status) => {
     width: 100%;
   }
 }
-
 </style>

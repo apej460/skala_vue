@@ -19,6 +19,24 @@ export function statusEmoji(main) {
   return map[main] || '🌤️'
 }
 
+// Element Plus 아이콘 폴백 (API 이미지 실패 시 사용).
+// main.js에서 전역 등록된 아이콘 컴포넌트 이름을 반환하며,
+// <component :is="statusIconName(main)" /> 형태로 사용한다.
+export function statusIconName(main) {
+  const map = {
+    Clear: 'Sunny',
+    Clouds: 'Cloudy',
+    Rain: 'Pouring',
+    Drizzle: 'Drizzling',
+    Thunderstorm: 'Lightning',
+    Snow: 'MostlyCloudy',
+    Mist: 'Cloudy',
+    Fog: 'Cloudy',
+    Haze: 'Cloudy',
+  }
+  return map[main] || 'PartlyCloudy'
+}
+
 // UTC 초 단위 시각 + 타임존 오프셋(초) → "HH:MM" 로컬 시각 문자열
 export function formatLocalTime(unixSeconds, tzOffsetSeconds = 0) {
   if (!unixSeconds) return '-'

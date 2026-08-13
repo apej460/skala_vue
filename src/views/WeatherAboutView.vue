@@ -9,8 +9,7 @@ const router = useRouter()
     <h1>🌤️ Weather Dashboard 소개</h1>
     <p>
       Vue 3(Composition API) + Vue Router + Pinia + Axios(OpenWeatherMap)로 만든 실습용 날씨
-      대시보드입니다. 도시별 실시간 날씨를 검색·비교하고, 전국 지도에서 한눈에 확인할 수
-      있습니다.
+      대시보드입니다. 도시별 실시간 날씨를 검색·비교하고, 전국 지도에서 한눈에 확인할 수 있습니다.
     </p>
 
     <ul class="feature-list">

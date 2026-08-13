@@ -1,7 +1,16 @@
 <script setup>
 import { computed } from 'vue'
 import { useConfigStore } from '@/stores/configStore'
-import { iconUrl, statusEmoji, aqiInfo } from '@/utils/weatherHelpers'
+import { iconUrl, statusIconName, aqiInfo } from '@/utils/weatherHelpers'
+import {
+  Close,
+  StarFilled,
+  Star,
+  HotWater,
+  IceDrink,
+  Drizzling,
+  WindPower,
+} from '@element-plus/icons-vue'
 
 const props = defineProps({
   city: { type: Object, required: true }, // { id, name, country, lat, lon }
@@ -18,7 +27,9 @@ const emit = defineEmits(['select-card', 'click-detail', 'remove-city'])
 const configStore = useConfigStore()
 
 const isWarm = computed(() => props.weather && props.weather.temp >= 25)
-const displayTemp = computed(() => (props.weather ? configStore.convertTemp(props.weather.temp) : null))
+const displayTemp = computed(() =>
+  props.weather ? configStore.convertTemp(props.weather.temp) : null,
+)
 const badge = computed(() => (props.weather ? aqiInfo(props.weather.aqi) : null))
 
 function handleCardClick() {
@@ -38,18 +49,22 @@ function handleRemoveClick() {
 <template>
   <div class="weather-card glass-card" @click="handleCardClick">
     <div class="corner-actions">
-      <button v-if="removable" class="icon-btn" title="삭제" @click.stop="handleRemoveClick">✕</button>
+      <button v-if="removable" class="icon-btn" title="삭제" @click.stop="handleRemoveClick">
+        <el-icon><Close /></el-icon>
+      </button>
       <button class="icon-btn fav" @click.stop="handleFavoriteClick">
-        {{ configStore.isFavorite(city.id) ? '★' : '☆' }}
+        <el-icon><component :is="configStore.isFavorite(city.id) ? StarFilled : Star" /></el-icon>
       </button>
     </div>
 
     <div class="card-top">
       <img v-if="weather" class="icon" :src="iconUrl(weather.icon)" :alt="weather.main" />
-      <span v-else class="icon emoji">{{ statusEmoji(weather?.main) }}</span>
+      <el-icon v-else class="icon emoji"><component :is="statusIconName(weather?.main)" /></el-icon>
       <div>
         <p class="city-name">{{ city.name }}</p>
-        <p class="status">{{ loading ? '불러오는 중…' : weather?.description ?? (error ? '오류' : '-') }}</p>
+        <p class="status">
+          {{ loading ? '불러오는 중…' : (weather?.description ?? (error ? '오류' : '-')) }}
+        </p>
       </div>
     </div>
 
@@ -57,12 +72,20 @@ function handleRemoveClick() {
       <p class="temp">{{ displayTemp }}{{ configStore.unitLabel }}</p>
 
       <!-- 조건부 렌더링 (v-if / v-else) : 기온 기준 라벨 -->
-      <p v-if="isWarm" class="pill warm">🔥 더움 (25도 이상)</p>
-      <p v-else class="pill cool">💨 선선함 (25도 미만)</p>
+      <p v-if="isWarm" class="pill warm">
+        <el-icon><HotWater /></el-icon> 더움 (25도 이상)
+      </p>
+      <p v-else class="pill cool">
+        <el-icon><IceDrink /></el-icon> 선선함 (25도 미만)
+      </p>
 
       <div class="meta-row">
-        <span>💧 {{ weather.humidity }}%</span>
-        <span>🌬️ {{ weather.windSpeed }}m/s</span>
+        <span
+          ><el-icon><Drizzling /></el-icon> {{ weather.humidity }}%</span
+        >
+        <span
+          ><el-icon><WindPower /></el-icon> {{ weather.windSpeed }}m/s</span
+        >
         <span v-if="badge" class="aqi-chip" :style="{ background: badge.color + '55' }">
           대기질 {{ badge.label }}
         </span>
@@ -80,7 +103,9 @@ function handleRemoveClick() {
   position: relative;
   padding: 18px;
   cursor: pointer;
-  transition: transform 0.15s ease, background 0.15s ease;
+  transition:
+    transform 0.15s ease,
+    background 0.15s ease;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -128,8 +153,9 @@ function handleRemoveClick() {
 
 .icon.emoji {
   font-size: 32px;
-  width: auto;
-  height: auto;
+  width: 32px;
+  height: 32px;
+  color: #fff;
 }
 
 .city-name {
@@ -156,6 +182,9 @@ function handleRemoveClick() {
   padding: 3px 10px;
   border-radius: 999px;
   font-size: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .pill.warm {
@@ -173,6 +202,12 @@ function handleRemoveClick() {
   color: var(--text-sub);
   flex-wrap: wrap;
   align-items: center;
+}
+
+.meta-row span {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
 }
 
 .aqi-chip {

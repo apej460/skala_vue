@@ -1,4 +1,6 @@
 <script setup>
+import { Location } from '@element-plus/icons-vue'
+
 defineProps({
   title: {
     type: String,
@@ -15,7 +17,9 @@ defineProps({
   <section class="base-dashboard glass-panel">
     <header class="dashboard-header">
       <h2 v-if="title">{{ title }}</h2>
-      <p v-if="statusText" class="status-bar">📍 {{ statusText }}</p>
+      <p v-if="statusText" class="status-bar">
+        <el-icon><Location /></el-icon> {{ statusText }}
+      </p>
     </header>
 
     <!-- 검색 UI가 주입되는 slot -->

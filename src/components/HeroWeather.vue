@@ -2,6 +2,16 @@
 import { computed } from 'vue'
 import { useConfigStore } from '@/stores/configStore'
 import { iconUrl, formatLocalTime, aqiInfo } from '@/utils/weatherHelpers'
+import {
+  Location,
+  Drizzling,
+  WindPower,
+  Compass,
+  View,
+  Sunrise,
+  Sunset,
+  Cloudy,
+} from '@element-plus/icons-vue'
 
 const props = defineProps({
   city: { type: Object, default: null },
@@ -23,48 +33,72 @@ const badge = computed(() => (props.weather ? aqiInfo(props.weather.aqi) : null)
     <template v-else>
       <div class="hero-top">
         <div>
-          <p class="place">📍 {{ city.name }}<span v-if="city.country"> · {{ city.country }}</span></p>
+          <p class="place">
+            <el-icon><Location /></el-icon> {{ city.name
+            }}<span v-if="city.country"> · {{ city.country }}</span>
+          </p>
           <p v-if="weather" class="desc">{{ weather.description }}</p>
           <p v-else-if="loading" class="desc">불러오는 중…</p>
         </div>
-        <img v-if="weather" class="hero-icon" :src="iconUrl(weather.icon, '4x')" :alt="weather.main" />
+        <img
+          v-if="weather"
+          class="hero-icon"
+          :src="iconUrl(weather.icon, '4x')"
+          :alt="weather.main"
+        />
       </div>
 
       <p v-if="weather" class="hero-temp">
-        {{ configStore.convertTemp(weather.temp) }}<span class="unit">{{ configStore.unitLabel }}</span>
+        {{ configStore.convertTemp(weather.temp)
+        }}<span class="unit">{{ configStore.unitLabel }}</span>
       </p>
       <p v-if="weather" class="hero-range">
         체감 {{ configStore.convertTemp(weather.feelsLike) }}° · 최고
-        {{ configStore.convertTemp(weather.tempMax) }}° · 최저 {{ configStore.convertTemp(weather.tempMin) }}°
+        {{ configStore.convertTemp(weather.tempMax) }}° · 최저
+        {{ configStore.convertTemp(weather.tempMin) }}°
       </p>
 
       <div v-if="weather" class="stat-grid">
         <div class="stat-card">
-          <p class="stat-label">💧 습도</p>
+          <p class="stat-label">
+            <el-icon><Drizzling /></el-icon> 습도
+          </p>
           <p class="stat-value">{{ weather.humidity }}%</p>
         </div>
         <div class="stat-card">
-          <p class="stat-label">🌬️ 풍속</p>
+          <p class="stat-label">
+            <el-icon><WindPower /></el-icon> 풍속
+          </p>
           <p class="stat-value">{{ weather.windSpeed }} m/s</p>
         </div>
         <div class="stat-card">
-          <p class="stat-label">🧭 기압</p>
+          <p class="stat-label">
+            <el-icon><Compass /></el-icon> 기압
+          </p>
           <p class="stat-value">{{ weather.pressure }} hPa</p>
         </div>
         <div class="stat-card">
-          <p class="stat-label">👁️ 가시거리</p>
+          <p class="stat-label">
+            <el-icon><View /></el-icon> 가시거리
+          </p>
           <p class="stat-value">{{ (weather.visibility / 1000).toFixed(1) }} km</p>
         </div>
         <div class="stat-card">
-          <p class="stat-label">🌅 일출</p>
+          <p class="stat-label">
+            <el-icon><Sunrise /></el-icon> 일출
+          </p>
           <p class="stat-value">{{ formatLocalTime(weather.sunrise, weather.timezone) }}</p>
         </div>
         <div class="stat-card">
-          <p class="stat-label">🌇 일몰</p>
+          <p class="stat-label">
+            <el-icon><Sunset /></el-icon> 일몰
+          </p>
           <p class="stat-value">{{ formatLocalTime(weather.sunset, weather.timezone) }}</p>
         </div>
         <div v-if="badge" class="stat-card aqi" :style="{ '--aqi-color': badge.color }">
-          <p class="stat-label">🌫️ 대기질</p>
+          <p class="stat-label">
+            <el-icon><Cloudy /></el-icon> 대기질
+          </p>
           <p class="stat-value">{{ badge.label }}</p>
         </div>
       </div>

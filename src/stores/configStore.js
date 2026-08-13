@@ -44,7 +44,7 @@ export const useConfigStore = defineStore('config', {
     persist() {
       localStorage.setItem(
         STORAGE_KEY,
-        JSON.stringify({ unit: this.unit, favorites: this.favorites, darkMode: this.darkMode })
+        JSON.stringify({ unit: this.unit, favorites: this.favorites, darkMode: this.darkMode }),
       )
     },
   },

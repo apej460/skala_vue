@@ -2,6 +2,7 @@
 import { ref, watch } from 'vue'
 import { geocodeSearch } from '@/services/weatherService'
 import { useCitiesStore } from '@/stores/citiesStore'
+import { Location } from '@element-plus/icons-vue'
 
 const citiesStore = useCitiesStore()
 
@@ -54,7 +55,7 @@ async function useMyLocation() {
   <div class="add-city">
     <div class="row">
       <div class="input-wrap">
-        <input
+        <el-input
           v-model="query"
           type="text"
           placeholder="+ 도시 추가 (예: 도쿄, 뉴욕, 파리)"
@@ -67,7 +68,9 @@ async function useMyLocation() {
           </li>
         </ul>
       </div>
-      <button class="pill-btn" @click="useMyLocation">📍 내 위치 사용</button>
+      <button class="pill-btn" @click="useMyLocation">
+        <el-icon><Location /></el-icon> 내 위치 사용
+      </button>
     </div>
     <p class="status-line" :class="{ visible: isSearching || locationError, error: locationError }">
       {{ locationError || (isSearching ? '검색 중…' : '') }}
@@ -92,22 +95,28 @@ async function useMyLocation() {
   min-width: 220px;
 }
 
-input {
-  width: 100%;
+.input-wrap :deep(.el-input__wrapper) {
   padding: 12px 16px;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.6);
   background: rgba(255, 255, 255, 0.62);
-  color: #1e2a3a;
-  font-size: 14px;
-  outline: none;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.6) inset;
 }
 
-input::placeholder {
+.input-wrap :deep(.el-input__wrapper.is-focus) {
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.9) inset;
+}
+
+.input-wrap :deep(.el-input__inner) {
+  color: #1e2a3a;
+  font-size: 14px;
+}
+
+.input-wrap :deep(.el-input__inner::placeholder) {
   color: #5b6b7d;
 }
 
 .suggestions {
+  color: #1e2a3a;
   position: absolute;
   top: calc(100% + 6px);
   left: 0;
@@ -123,10 +132,18 @@ input::placeholder {
 .suggestions li {
   display: flex;
   justify-content: space-between;
+  border-bottom: 1px solid white;
   padding: 8px 12px;
-  border-radius: 10px;
   cursor: pointer;
   font-size: 14px;
+}
+li {
+  border-bottom: 1px solid #334155;
+  padding: 12px 0;
+}
+
+li:last-child {
+  border-bottom: none;
 }
 
 .suggestions li:hover {

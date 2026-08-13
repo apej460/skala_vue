@@ -1,158 +1,166 @@
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 :root {
-    --glass-bg: rgba(255, 255, 255, 0.14);
-    --glass-bg-strong: rgba(255, 255, 255, 0.24);
-    --glass-border: rgba(255, 255, 255, 0.32);
-    --text-main: #ffffff;
-    --text-sub: rgba(255, 255, 255, 0.75);
-    --radius-lg: 24px;
-    --radius-md: 16px;
-    --radius-sm: 12px;
+  --glass-bg: rgba(255, 255, 255, 0.14);
+  --glass-bg-strong: rgba(255, 255, 255, 0.24);
+  --glass-border: rgba(255, 255, 255, 0.32);
+  --text-main: #ffffff;
+  --text-sub: rgba(255, 255, 255, 0.75);
+  --radius-lg: 24px;
+  --radius-md: 16px;
+  --radius-sm: 12px;
 }
 
 html,
 body,
 #app {
-    height: 100%;
-    margin: 0;
+  height: 100%;
+  margin: 0;
 }
 
 body {
-    font-family: 'Pretendard', 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif;
-    color: var(--text-main);
-    min-height: 100vh;
-    transition: background 0.6s ease;
+  font-family:
+    'Pretendard',
+    'Apple SD Gothic Neo',
+    'Malgun Gothic',
+    -apple-system,
+    sans-serif;
+  color: var(--text-main);
+  min-height: 100vh;
+  transition: background 0.6s ease;
 }
 
 a {
-    color: inherit;
-    text-decoration: none;
+  color: inherit;
+  text-decoration: none;
 }
 
 button {
-    font-family: inherit;
-    cursor: pointer;
-    border: none;
-    color: inherit;
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  color: inherit;
 }
 
 button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 /* ---------- 날씨 상태 기반 배경 테마 (참고: Apple Weather / Windy) ---------- */
 .theme-clear {
-    background: linear-gradient(160deg, #1e5799 0%, #2989d8 35%, #62b1e0 65%, #a6d6f2 100%);
+  background: linear-gradient(160deg, #1e5799 0%, #2989d8 35%, #62b1e0 65%, #a6d6f2 100%);
 }
 
 .theme-clouds {
-    background: linear-gradient(160deg, #4b6584 0%, #6c85a3 40%, #97a9c4 70%, #c3cfe2 100%);
+  background: linear-gradient(160deg, #4b6584 0%, #6c85a3 40%, #97a9c4 70%, #c3cfe2 100%);
 }
 
 .theme-rain {
-    background: linear-gradient(160deg, #21324a 0%, #3a5474 40%, #5a7896 75%, #7c98ac 100%);
+  background: linear-gradient(160deg, #21324a 0%, #3a5474 40%, #5a7896 75%, #7c98ac 100%);
 }
 
 .theme-thunder {
-    background: linear-gradient(160deg, #1a1a2e 0%, #313152 40%, #4b3f6b 75%, #5f4b7a 100%);
+  background: linear-gradient(160deg, #1a1a2e 0%, #313152 40%, #4b3f6b 75%, #5f4b7a 100%);
 }
 
 .theme-snow {
-    background: linear-gradient(160deg, #7f9cbd 0%, #a9c1dc 40%, #d3e3f0 75%, #eef4fa 100%);
+  background: linear-gradient(160deg, #7f9cbd 0%, #a9c1dc 40%, #d3e3f0 75%, #eef4fa 100%);
 }
 
 .theme-mist {
-    background: linear-gradient(160deg, #5c6b73 0%, #7d8b93 40%, #a3aeb5 75%, #cfd8de 100%);
+  background: linear-gradient(160deg, #5c6b73 0%, #7d8b93 40%, #a3aeb5 75%, #cfd8de 100%);
 }
 
 .theme-night {
-    background: radial-gradient(circle at 20% 10%, #2c3e6b 0%, transparent 45%),
-        linear-gradient(160deg, #0b1224 0%, #131b34 35%, #1c2747 65%, #263457 100%);
+  background:
+    radial-gradient(circle at 20% 10%, #2c3e6b 0%, transparent 45%),
+    linear-gradient(160deg, #0b1224 0%, #131b34 35%, #1c2747 65%, #263457 100%);
 }
 
 body.dark-mode {
-    background: linear-gradient(160deg, #0f172a 0%, #1e293b 45%, #334155 100%) !important;
+  background: linear-gradient(160deg, #0f172a 0%, #1e293b 45%, #334155 100%) !important;
 }
 
 body.dark-mode .app-shell {
-    --glass-bg: rgba(255, 255, 255, 0.06);
-    --glass-bg-strong: rgba(255, 255, 255, 0.1);
-    --glass-border: rgba(255, 255, 255, 0.16);
+  --glass-bg: rgba(255, 255, 255, 0.06);
+  --glass-bg-strong: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.16);
 }
 
 .app-shell {
-    max-width: 1180px;
-    margin: 0 auto;
-    padding: 20px 24px 70px;
-    min-height: 100vh;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 20px 24px 70px;
+  min-height: 100vh;
 }
 
 .glass-panel {
-    background: var(--glass-bg);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid var(--glass-border);
-    border-radius: var(--radius-lg);
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
 }
 
 .glass-card {
-    background: var(--glass-bg-strong);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border: 1px solid var(--glass-border);
-    border-radius: var(--radius-md);
+  background: var(--glass-bg-strong);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
 }
 
 .text-sub {
-    color: var(--text-sub);
+  color: var(--text-sub);
 }
 
 .pill-btn {
-    padding: 8px 16px;
-    border-radius: 999px;
-    background: var(--glass-bg);
-    color: var(--text-main);
-    border: 1px solid var(--glass-border);
-    font-size: 14px;
-    transition: background 0.15s ease, transform 0.1s ease;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: var(--glass-bg);
+  color: var(--text-main);
+  border: 1px solid var(--glass-border);
+  font-size: 14px;
+  transition:
+    background 0.15s ease,
+    transform 0.1s ease;
 }
 
 .pill-btn:hover {
-    background: var(--glass-bg-strong);
+  background: var(--glass-bg-strong);
 }
 
 .pill-btn:active {
-    transform: scale(0.97);
+  transform: scale(0.97);
 }
 
 .pill-btn.active {
-    background: rgba(255, 255, 255, 0.4);
-    font-weight: 600;
+  background: rgba(255, 255, 255, 0.4);
+  font-weight: 600;
 }
 
 .section-title {
-    font-size: 15px;
-    font-weight: 700;
-    margin: 0 0 12px;
-    opacity: 0.9;
+  font-size: 15px;
+  font-weight: 700;
+  margin: 0 0 12px;
+  opacity: 0.9;
 }
 
 ::-webkit-scrollbar {
-    height: 8px;
-    width: 8px;
+  height: 8px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.35);
-    border-radius: 999px;
+  background: rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
 }
 
 @media (max-width: 640px) {
-    .app-shell {
-        padding: 14px 14px 50px;
-    }
+  .app-shell {
+    padding: 14px 14px 50px;
+  }
 }

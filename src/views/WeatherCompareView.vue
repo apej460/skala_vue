@@ -14,7 +14,7 @@ const selectedIds = ref(
   citiesStore.cities
     .filter((c) => configStore.isFavorite(c.id))
     .slice(0, 3)
-    .map((c) => c.id)
+    .map((c) => c.id),
 )
 
 function toggleSelect(id) {
@@ -29,7 +29,7 @@ const selectedCities = computed(() =>
   citiesStore.cities
     .filter((c) => selectedIds.value.includes(c.id))
     .map((c) => ({ city: c, weather: citiesStore.weatherById[c.id] }))
-    .filter((entry) => entry.weather)
+    .filter((entry) => entry.weather),
 )
 
 const warmestId = computed(() => {
@@ -81,18 +81,27 @@ const rows = [
           <span v-if="entry.city.id === bestAirId" class="badge air">🌿 대기질 최상</span>
         </div>
 
-        <RouterLink :to="{ name: 'weather-detail', params: { cityId: entry.city.id } }" class="city-link">
+        <RouterLink
+          :to="{ name: 'weather-detail', params: { cityId: entry.city.id } }"
+          class="city-link"
+        >
           <img :src="iconUrl(entry.weather.icon)" :alt="entry.weather.main" class="icon" />
           <p class="name">{{ entry.city.name }}</p>
         </RouterLink>
 
-        <p class="temp">{{ configStore.convertTemp(entry.weather.temp) }}{{ configStore.unitLabel }}</p>
+        <p class="temp">
+          {{ configStore.convertTemp(entry.weather.temp) }}{{ configStore.unitLabel }}
+        </p>
 
         <ul class="stat-list">
           <li v-for="row in rows.slice(1)" :key="row.key">
             <span>{{ row.label }}</span>
             <span>
-              {{ row.unit ? configStore.convertTemp(entry.weather[row.key]) + configStore.unitLabel : entry.weather[row.key] + (row.suffix || '') }}
+              {{
+                row.unit
+                  ? configStore.convertTemp(entry.weather[row.key]) + configStore.unitLabel
+                  : entry.weather[row.key] + (row.suffix || '')
+              }}
             </span>
           </li>
           <li v-if="entry.weather.aqi">
