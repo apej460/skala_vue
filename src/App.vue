@@ -3,6 +3,7 @@ import { computed, watch, onMounted } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
 import UnitToggler from '@/component/UnitToggler.vue'
 import DarkModeToggle from '@/component/DarkModeToggle.vue'
+import WeatherAnimation from './component/WeatherAnimation.vue'
 import { useConfigStore } from '@/stores/configStore'
 import { useCitiesStore } from '@/stores/citiesStore'
 import { themeClass, isNightNow } from '@/utils/weatherHelpers'
@@ -28,6 +29,13 @@ const currentTheme = computed(() => {
   return themeClass(w.main, isNightNow(w.sunrise, w.sunset))
 })
 
+// 배경 애니메이션(태양/구름/비/눈 등)에 넘겨줄 원본 날씨 상태
+const primaryMain = computed(() => citiesStore.primaryWeather?.main ?? 'Clear')
+const primaryIsNight = computed(() => {
+  const w = citiesStore.primaryWeather
+  return w ? isNightNow(w.sunrise, w.sunset) : false
+})
+
 // 테마 배경을 .app-shell이 아닌 body 전체에 적용해,
 // 화면이 app-shell의 max-width(1180px)보다 넓어도 좌우 여백 색이 따로 놀지 않게 한다.
 function applyBodyTheme(theme) {
@@ -50,6 +58,8 @@ watch(currentTheme, (value) => applyBodyTheme(value))
 </script>
 
 <template>
+  <WeatherAnimation v-if="!configStore.darkMode" :main="primaryMain" :is-night="primaryIsNight" />
+
   <nav class="navbar">
     <div class="navbar-inner">
       <RouterLink to="/" class="brand">

@@ -5,7 +5,7 @@ import { fetchCityWeatherBundle, fetchCurrentOnly, reverseGeocode } from '@/serv
 import { mapWithConcurrency } from '@/utils/concurrency'
 
 const STORAGE_KEY = 'weather-dashboard:cities'
-const MAP_CACHE_MS = 10 * 60 * 1000 // 지도 데이터는 10분간 캐시
+const MAP_CACHE_MS = 10 * 60 * 1000
 
 function loadCities() {
   try {
@@ -15,7 +15,7 @@ function loadCities() {
       if (Array.isArray(parsed) && parsed.length > 0) return parsed
     }
   } catch (e) {
-    /* ignore */
+    console.error('오류 발생:', e)
   }
   return defaultCities
 }
@@ -130,7 +130,7 @@ export const useCitiesStore = defineStore('cities', () => {
           const data = await fetchCurrentOnly(city.lat, city.lon)
           mapWeatherById.value = { ...mapWeatherById.value, [city.id]: data }
         } catch (err) {
-          // 개별 도시 실패는 조용히 건너뜀 (지도 전체가 멈추지 않도록)
+          console.log('오류:', err)
         }
       })
       mapUpdatedAt.value = Date.now()

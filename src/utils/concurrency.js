@@ -1,5 +1,5 @@
 export async function mapWithConcurrency(items, limit, worker) {
-  const results = new Array(items.length)
+  const results = Array.from({ length: items.length })
   let cursor = 0
 
   async function runNext() {
